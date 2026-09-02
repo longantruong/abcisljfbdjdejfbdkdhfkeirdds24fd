@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Lottery Board" />
+    <title>Lottery Board</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="hero">
+        <div class="brand-mark" aria-hidden="true">L</div>
+        <div>
+          <h1>Lottery Board</h1>
+        </div>
+      </header>
+
+      <section class="catalogue" aria-labelledby="games-heading">
+        <div class="section-heading">
+          <h2 id="games-heading" class="visually-hidden">Games</h2>
+          <p id="game-count" class="game-count" aria-live="polite">Loading games…</p>
+        </div>
+
+        <div id="games-grid" class="games-grid" aria-live="polite" aria-busy="true">
+          <div class="loading-card"><span class="spinner"></span><p>Finding games for you…</p></div>
+        </div>
+      </section>
+    </main>
+
+    <template id="game-card-template">
+      <article class="game-card">
+        <div class="image-wrap">
+          <div class="badges" aria-label="Game labels"></div>
+          <img class="game-image" alt="" />
+          <div class="image-placeholder" aria-hidden="true">
+            <span>✦</span>
+            <small>Lottery game</small>
+          </div>
+        </div>
+        <div class="card-content">
+          <h3 class="game-name"></h3>
+          <div class="card-footer">
+            <div>
+              <p class="current-label">CURRENT NUMBER</p>
+              <p class="current-number"></p>
+            </div>
+            <p class="game-price"></p>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
