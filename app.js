@@ -30,8 +30,8 @@ function fitGrid(itemCount) {
   gamesGrid.style.setProperty("--footer-padding", `${Math.max(4, Math.min(9, cardHeight * 0.065))}px`);
   gamesGrid.style.setProperty("--name-size", `${Math.max(9, Math.min(14, cardHeight * 0.095))}px`);
   gamesGrid.style.setProperty("--price-size", `${Math.max(13, Math.min(25, cardHeight * 0.16))}px`);
-  gamesGrid.style.setProperty("--number-size", `${Math.max(10, Math.min(16, cardHeight * 0.108))}px`);
-  gamesGrid.style.setProperty("--label-size", `${Math.max(7, Math.min(9, cardHeight * 0.06))}px`);
+  gamesGrid.style.setProperty("--number-size", `${Math.max(9, Math.min(13, cardHeight * 0.09))}px`);
+  gamesGrid.style.setProperty("--label-size", `${Math.max(6, Math.min(8, cardHeight * 0.055))}px`);
   gamesGrid.style.setProperty("--badge-size", `${Math.max(6, Math.min(9, cardHeight * 0.06))}px`);
   gamesGrid.style.setProperty("--order-size", `${Math.max(11, Math.min(16, cardHeight * 0.105))}px`);
 }
@@ -56,8 +56,6 @@ function createGameCard(item, index) {
 
   card.dataset.gameId = item.id;
   fragment.querySelector(".item-order").textContent = String(index + 1).padStart(2, "0");
-  fragment.querySelector(".game-name").textContent = item.name || "Untitled Game";
-  fragment.querySelector(".game-price").textContent = `$${item.price ?? 0}`;
   fragment.querySelector(".current-number").textContent = formatNumber(item.current_number);
 
   badges.filter((badge) => item[badge.key] === 1).forEach((badge) => {
@@ -65,10 +63,13 @@ function createGameCard(item, index) {
   });
 
   if (typeof item.image === "string" && item.image.trim()) {
-    image.src = item.image;
     image.alt = item.name ? `${item.name} game artwork` : "Game artwork";
     image.addEventListener("load", () => imageWrap.classList.add("has-image"), { once: true });
     image.addEventListener("error", () => imageWrap.classList.remove("has-image"), { once: true });
+    image.src = item.image;
+
+    // A cached image can finish before the load event listener runs.
+    if (image.complete && image.naturalWidth > 0) imageWrap.classList.add("has-image");
   }
 
   return fragment;
