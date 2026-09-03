@@ -258,10 +258,11 @@ h2 {
   position: absolute;
   z-index: 2;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-end;
   gap: 4px;
   top: clamp(5px, .8vh, 9px);
-  left: calc(2.15em + clamp(10px, 1.3vh, 14px));
+  left: auto;
   right: clamp(5px, .8vh, 9px);
 }
 
@@ -306,6 +307,22 @@ h2 {
   border: 0;
   border-radius: .45em;
   box-shadow: none;
+}
+
+.game-price {
+  position: absolute;
+  z-index: 3;
+  bottom: 3px;
+  left: 3px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.25em;
+  padding: .08em .3em;
+  color: #fff;
+  font: 800 var(--number-size, 11px)/1 "Outfit", sans-serif;
+  background: rgba(235, 133, 20, .94);
+  border-radius: .28em;
+  box-shadow: 0 1px 4px rgba(128, 67, 0, .28);
 }
 
 .card-content {

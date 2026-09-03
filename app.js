@@ -5,9 +5,9 @@ const gameCount = document.querySelector("#game-count");
 const cardTemplate = document.querySelector("#game-card-template");
 
 const badges = [
-  { key: "new", label: "NEW", className: "badge-new" },
-  { key: "hot", label: "HOT", className: "badge-hot" },
   { key: "best_seller", label: "BEST SELLER", className: "badge-best" },
+  { key: "hot", label: "HOT", className: "badge-hot" },
+  { key: "new", label: "NEW", className: "badge-new" },
 ];
 
 function fitGrid(itemCount) {
@@ -56,6 +56,7 @@ function createGameCard(item, index) {
 
   card.dataset.gameId = item.id;
   fragment.querySelector(".item-order").textContent = String(index + 1).padStart(2, "0");
+  fragment.querySelector(".game-price").textContent = `$${item.price ?? 0}`;
   fragment.querySelector(".current-number").textContent = formatNumber(item.current_number);
 
   badges.filter((badge) => item[badge.key] === 1).forEach((badge) => {
