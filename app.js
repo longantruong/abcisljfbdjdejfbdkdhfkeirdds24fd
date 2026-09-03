@@ -14,32 +14,26 @@ function fitGrid(itemCount) {
   if (!itemCount) return;
 
   const gridBox = gamesGrid.getBoundingClientRect();
-  const gap = Math.min(16, Math.max(6, window.innerWidth * 0.011));
-  let bestLayout = { columns: 1, rows: itemCount, score: Infinity };
-
-  for (let columns = 1; columns <= itemCount; columns += 1) {
-    const rows = Math.ceil(itemCount / columns);
-    const cardWidth = (gridBox.width - gap * (columns - 1)) / columns;
-    const cardHeight = (gridBox.height - gap * (rows - 1)) / rows;
-    const ratioScore = Math.abs(Math.log((cardWidth / cardHeight) / 1.05));
-    const smallCardPenalty = cardHeight < 74 ? (74 - cardHeight) / 4 : 0;
-    const score = ratioScore + smallCardPenalty;
-
-    if (score < bestLayout.score) bestLayout = { columns, rows, score };
-  }
+  const gap = Math.min(10, Math.max(4, window.innerWidth * 0.007));
+  const bestLayout = {
+    columns: Math.min(10, itemCount),
+    rows: Math.ceil(itemCount / Math.min(10, itemCount)),
+  };
 
   gamesGrid.style.setProperty("--grid-columns", bestLayout.columns);
   gamesGrid.style.setProperty("--grid-rows", bestLayout.rows);
 
   const cardHeight = (gridBox.height - gap * (bestLayout.rows - 1)) / bestLayout.rows;
+  gamesGrid.classList.toggle("compact-grid", cardHeight < 190);
   gamesGrid.style.setProperty("--card-padding", `${Math.max(5, Math.min(14, cardHeight * 0.1))}px`);
   gamesGrid.style.setProperty("--name-gap", `${Math.max(3, Math.min(10, cardHeight * 0.07))}px`);
   gamesGrid.style.setProperty("--footer-padding", `${Math.max(4, Math.min(9, cardHeight * 0.065))}px`);
-  gamesGrid.style.setProperty("--name-size", `${Math.max(10, Math.min(17, cardHeight * 0.115))}px`);
+  gamesGrid.style.setProperty("--name-size", `${Math.max(9, Math.min(14, cardHeight * 0.095))}px`);
   gamesGrid.style.setProperty("--price-size", `${Math.max(13, Math.min(25, cardHeight * 0.16))}px`);
   gamesGrid.style.setProperty("--number-size", `${Math.max(10, Math.min(16, cardHeight * 0.108))}px`);
   gamesGrid.style.setProperty("--label-size", `${Math.max(7, Math.min(9, cardHeight * 0.06))}px`);
   gamesGrid.style.setProperty("--badge-size", `${Math.max(6, Math.min(9, cardHeight * 0.06))}px`);
+  gamesGrid.style.setProperty("--order-size", `${Math.max(11, Math.min(16, cardHeight * 0.105))}px`);
 }
 
 function formatNumber(value) {
@@ -53,7 +47,7 @@ function createBadge({ label, className }) {
   return badge;
 }
 
-function createGameCard(item) {
+function createGameCard(item, index) {
   const fragment = cardTemplate.content.cloneNode(true);
   const card = fragment.querySelector(".game-card");
   const imageWrap = fragment.querySelector(".image-wrap");
@@ -61,6 +55,7 @@ function createGameCard(item) {
   const badgesContainer = fragment.querySelector(".badges");
 
   card.dataset.gameId = item.id;
+  fragment.querySelector(".item-order").textContent = String(index + 1).padStart(2, "0");
   fragment.querySelector(".game-name").textContent = item.name || "Untitled Game";
   fragment.querySelector(".game-price").textContent = `$${item.price ?? 0}`;
   fragment.querySelector(".current-number").textContent = formatNumber(item.current_number);
@@ -91,7 +86,7 @@ function renderGames(items) {
   }
 
   const cards = document.createDocumentFragment();
-  activeGames.forEach((item) => cards.append(createGameCard(item)));
+  activeGames.forEach((item, index) => cards.append(createGameCard(item, index)));
   gamesGrid.append(cards);
   gameCount.textContent = `${activeGames.length} ${activeGames.length === 1 ? "game" : "games"} available`;
   fitGrid(activeGames.length);
