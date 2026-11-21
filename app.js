@@ -1,7 +1,6 @@
 const API_URL = "https://withered-wildflower-37ab.wymanmelyssa4.workers.dev/";
 
 const gamesGrid = document.querySelector("#games-grid");
-const gameCount = document.querySelector("#game-count");
 const cardTemplate = document.querySelector("#game-card-template");
 
 const badges = [
@@ -83,14 +82,12 @@ function renderGames(items) {
 
   if (!activeGames.length) {
     gamesGrid.innerHTML = '<div class="empty-state"><p>No active games are available right now.</p></div>';
-    gameCount.textContent = "0 games available";
     return;
   }
 
   const cards = document.createDocumentFragment();
   activeGames.forEach((item, index) => cards.append(createGameCard(item, index)));
   gamesGrid.append(cards);
-  gameCount.textContent = `${activeGames.length} ${activeGames.length === 1 ? "game" : "games"} available`;
   fitGrid(activeGames.length);
 }
 
@@ -105,7 +102,6 @@ async function loadGames() {
     if (!gamesGrid.children.length || gamesGrid.querySelector(".loading-card")) {
       gamesGrid.innerHTML = '<div class="error-state"><p>Unable to load games. Please try again shortly.</p></div>';
     }
-    gameCount.textContent = "Updates temporarily unavailable";
   }
 }
 

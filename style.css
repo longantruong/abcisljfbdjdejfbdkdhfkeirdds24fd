@@ -1,7 +1,7 @@
 :root {
-  --ink: #1e1736;
+  --ink: #f6f3ff;
   --muted: #837c97;
-  --paper: #fcfbff;
+  --paper: #151124;
   --purple: #7256e8;
   --pink: #f75d9b;
   --line: #ece8f4;
@@ -27,11 +27,11 @@ body {
 
 .page-shell {
   height: 100dvh;
-  padding: clamp(10px, 1.7vh, 18px) clamp(16px, 2.3vw, 36px);
+  padding: clamp(5px, .8vh, 10px) clamp(8px, 1.2vw, 18px);
   overflow: hidden;
   background:
-    radial-gradient(circle at 93% 3%, rgba(222, 209, 255, .9), transparent 20rem),
-    radial-gradient(circle at 5% 75%, rgba(255, 216, 234, .55), transparent 20rem),
+    radial-gradient(circle at 93% 3%, rgba(99, 69, 180, .25), transparent 25rem),
+    radial-gradient(circle at 5% 75%, rgba(189, 60, 121, .14), transparent 23rem),
     var(--paper);
 }
 
@@ -134,7 +134,7 @@ h1 span {
 .catalogue {
   display: flex;
   flex-direction: column;
-  height: calc(100% - clamp(38px, 5vh, 52px));
+  height: 100%;
   max-width: none;
   margin: 0 auto;
 }
@@ -292,21 +292,22 @@ h2 {
 .item-order {
   position: absolute;
   z-index: 3;
-  top: 3px;
-  left: 3px;
+  top: 50%;
+  left: 50%;
   display: grid;
   place-items: center;
-  min-width: 2.15em;
-  min-height: 2.15em;
-  padding: .15em .35em;
+  min-width: 2.5em;
+  min-height: 2.5em;
+  padding: .2em .4em;
   color: #33206f;
   font-size: var(--order-size, 13px);
   font-weight: 900;
   line-height: 1;
-  background: rgba(255, 255, 255, .86);
+  background: rgba(255, 255, 255, .82);
   border: 0;
-  border-radius: .45em;
+  border-radius: 50%;
   box-shadow: none;
+  transform: translate(-50%, -50%);
 }
 
 .game-price {
