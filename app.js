@@ -106,5 +106,5 @@ async function loadGames() {
 }
 
 loadGames();
-setInterval(loadGames, 60000);
+setInterval(loadGames, 30000);
 window.addEventListener("resize", () => fitGrid(gamesGrid.querySelectorAll(".game-card").length));
